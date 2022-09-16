@@ -1,0 +1,71 @@
+{% extends "base.html.twig" %}
+
+{% block title %} E-shop shop ! {% endblock title %}
+
+
+{% block body %}
+
+{{ include("partials/title_section.html.twig", {'name':'Shop'}) }}
+
+<div class="section">
+	<div class="container">
+    	<div class="row">
+			<div class="col-lg-12">
+                <div class="row shop_container">
+                    {% if not products %}
+                        <p class="m-5">Sorry. No product matches your search results !</p>
+                    {% endif %}
+                    {% for product in products %}
+                        
+                        {{ include('partials/product.html.twig',{'product': product}) }}
+                        
+                    {% endfor %}
+                </div>
+        	</div>
+          <div class="col-lg-12 order-lg-first  mb-3 ">
+            	<div class="sidebar">
+                    {{ form_start(search) }}
+                	<div class="">
+                        <h5 class="widget_title ">Categories</h5>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                        {{ form_row(search.categories)}}
+                        </div>
+                            
+                        </div>
+                        
+                    </div>
+                    <div class="">
+                        <h5 class="">Price</h5>  
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                {{ form_row(search.minprice)}}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_row(search.maxprice)}}
+                            </div>
+                        </div>                             
+                    </div>
+                    <div class="">
+                        <h5 class="">Tags</h5>
+                        {{ form_row(search.tags)}}                       
+                    </div>
+                    <button class="btn btn-border-fill btn-block"> Search</button>
+                    {{ form_end(search)}}
+                </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $('.js-categories-multiple').select2();
+        });
+    </script>
+{% endblock %}
